@@ -31,7 +31,7 @@ $ npm i
 $ npm start
 ```
 
-> then open this [link](localhost:3000)
+> then open this [link](http://localhost:3000)
 
 ## run front-office
 
@@ -41,4 +41,4 @@ $ npm i
 $ npm start
 ```
 
-> then open this [link](localhost:3001)
+> then open this [link](http://localhost:3001)
