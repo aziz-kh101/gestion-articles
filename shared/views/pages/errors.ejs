@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('../partials/head', {title: 'error'}); %>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <%- include('../partials/header'); %>
+    <section class="d-flex flex-column gap-2 align-items-center mt-4">
+      <img
+        style="max-width: 30rem"
+        src="/images/errors/<%=error.status%>.jpg"
+        alt=""
+      />
+      <a href="/" class="btn btn-primary">Go Home</a>
+    </section>
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

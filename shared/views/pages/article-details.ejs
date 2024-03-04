@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('../partials/head', {title: 'list articles'}); %>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <%- include('../partials/header'); %>
+
+    <div class="container mt-5">
+      <section class="d-flex flex-column gap-3 mb-4">
+        <div class="d-flex justify-content-start align-items-center">
+          <a
+            name="add"
+            id="add"
+            class="btn btn-primary"
+            href="/articles"
+            role="button"
+          >
+            Go Back
+          </a>
+        </div>
+        <h1><%= article.title %></h1>
+        <h4><%= article.description %></h4>
+        <span><%= article.content %></span>
+        <span
+          ><strong>isPremium : </strong><%= article.isPremium == '1' ? 'yes' :
+          'no' %></span
+        >
+        <% if(locals.currentUser && currentUser.role != "USER") {%>
+        <span><strong>createdBy : </strong>@<%= article.createdBy %></span>
+        <%}%>
+      </section>
+    </div>
+    <!--||-->
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('../partials/head', {title: 'list articles'}); %>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <%- include('../partials/header'); %>
+
+    <div class="container mt-5">
+      <section>
+        <div class="d-flex justify-content-between align-items-center">
+          <h1>list articles</h1>
+          <% if (locals.currentUser && currentUser.role != "USER"){%>
+          <a
+            name="add"
+            id="add"
+            class="btn btn-primary"
+            href="/articles/add"
+            role="button"
+          >
+            Add Article
+          </a>
+          <%}%>
+        </div>
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <% if(locals.currentUser && currentUser.role != "USER"){%>
+              <th scope="col">CreatedBy</th>
+              <%}%>
+              <th scope="col">isPremium</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% articles.forEach((article)=>{%>
+            <tr>
+              <td><%= article.title %></td>
+              <td><%= article.description %></td>
+              <% if(locals.currentUser && currentUser.role != "USER"){%>
+              <td>
+                <%- article.createdBy == currentUser.username ?
+                '<strong>You</strong>' : '@'+article.createdBy %>
+              </td>
+              <%}%>
+              <td><%= article.isPremium ? "yes" : "no" %></td>
+              <td>
+                <div class="d-flex gap-2">
+                  <a
+                    name="update"
+                    id="update"
+                    class="btn btn-primary"
+                    href="/articles/details/<%= article.id %>"
+                    role="button"
+                  >
+                    details
+                  </a>
+                  <% if(locals.currentUser && ( currentUser.username ==
+                  article.createdBy || currentUser.role == "SUPER_ADMIN")) {%>
+                  <div class="d-flex gap-2">
+                    <a
+                      name="update"
+                      id="update"
+                      class="btn btn-warning"
+                      href="/articles/update/<%= article.id %>"
+                      role="button"
+                    >
+                      update
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirm"
+                    >
+                      delete
+                    </button>
+                  </div>
+                  <%}%>
+                </div>
+
+                <%- include('../partials/confirm-modal',{
+                action:'/articles/delete/'+ article.id}); %>
+              </td>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+      </section>
+      <div class="p-3 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item <%= pageNumber == 1 ? 'disabled' : ''%>">
+              <a
+                class="page-link"
+                href="/articles?page=<%= pageNumber-1 %>"
+                aria-label="Previous"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <% pages.forEach((n)=>{%>
+            <li class="page-item <%= pageNumber == n ? 'active' : '' %>">
+              <a class="page-link" href="/articles?page=<%= n %>"><%= n %></a>
+            </li>
+            <%})%>
+
+            <li
+              class="page-item <%= pageNumber == pages.length ? 'disabled' : '' %>"
+            >
+              <a
+                class="page-link"
+                href="/articles?page=<%= pageNumber+1 %>"
+                aria-label="Next"
+              >
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <!--||-->
+    <%- include('../partials/footer'); %>
+  </body>
+</html>

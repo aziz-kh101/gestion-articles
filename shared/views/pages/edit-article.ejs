@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <%- include('../partials/head', {title: 'add user'}); %>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <%- include('../partials/header'); %>
+
+    <div class="container d-flex flex-row justify-content-center mt-5">
+      <section class="form w-100">
+        <h1 class="flex-fill text-center">Edit Article</h1>
+
+        <form
+          class="d-flex flex-column align-item-center gap-3 needs-validation"
+          novalidate
+          method="post"
+          action="/articles/update/<%= article.id %>"
+        >
+          <div class="flex-fill form-floating">
+            <input
+              name="title"
+              type="text"
+              class="form-control"
+              id="title"
+              value="<%= article.title %>"
+              aria-describedby="inputGroupPrepend"
+              required
+              placeholder="title"
+            />
+            <label for="title" class="form-label">title</label>
+          </div>
+          <div class="flex-fill form-floating">
+            <input
+              name="description"
+              type="text"
+              class="form-control"
+              id="description"
+              value="<%= article.description %>"
+              aria-describedby="inputGroupPrepend"
+              required
+              placeholder="description"
+            />
+            <label for="description" class="form-label">description</label>
+          </div>
+          <div class="flex-fill form-floating">
+            <textarea
+              name="content"
+              class="form-control"
+              id="content"
+              aria-describedby="inputGroupPrepend"
+              required
+              placeholder="content"
+              style="height: 200px"
+            ><%=article.content%></textarea
+            >
+            <label for="content" class="form-label">content</label>
+          </div>
+          <div class="flex-fill form-floating">
+            <select
+              class="form-select"
+              id="isPremium"
+              name="isPremium"
+              placeholder="isPremium"
+              aria-label="Floating label select example"
+              required
+            >
+              <option value="" <%= !article.isPremium ? 'selected' : '' %>>
+                choose one
+              </option>
+              <option value="1" <%=  article.isPremium == '1' ? 'selected' : '' %>>
+                yes
+              </option>
+              <option value="0" <%=  article.isPremium == '0' ? 'selected' : '' %>>
+                no
+              </option>
+            </select>
+            <label for="isPremium" class="form-label">isPremium</label>
+          </div>
+          <div class="flex-fill">
+            <button class="btn btn-primary w-100" type="submit">
+              Edit Article
+            </button>
+          </div>
+
+          <% if(locals.error) { %>
+          <div class="alert alert-danger" role="alert"><%= error %></div>
+          <% } %>
+        </form>
+      </section>
+    </div>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>
